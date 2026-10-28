@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Data Barang</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="container py-4">
+    <h2>Data Barang Laboratorium</h2>
+    <a href="{{ url_for('tambah_barang') }}" class="btn btn-success my-3"
+      >Tambah Barang</a
+    >
+    <a href="{{ url_for('dashboard_admin') }}" class="btn btn-secondary my-3"
+      >Dashboard</a
+    >
+
+    {% with messages = get_flashed_messages() %} {% for message in messages %}
+    <div class="alert alert-info">{{ message }}</div>
+    {% endfor %} {% endwith %}
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Gambar</th>
+            <th>Nama Barang</th>
+            <th>Kategori</th>
+            <th>Stok</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in barang %}
+          <tr>
+            <td>
+              {% if item['gambar'] %}
+              <img
+                src="{{ url_for('static', filename=barang.gambar) }}"
+                alt="{{ barang.nama_barang }}"
+                width="150"
+              />
+              {% else %}-{% endif %}
+            </td>
+            <td>{{ item['nama_barang'] }}</td>
+            <td>{{ item['kategori'] or '-' }}</td>
+            <td>{{ item['stok'] }}</td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="4">Belum ada barang.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>

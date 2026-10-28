@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard Mahasiswa</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container py-4">
+      <div
+        class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4"
+      >
+        <div>
+          <h2>Laboratorium</h2>
+          <p>Halo, {{ session.get('nama') }}!</p>
+        </div>
+        <a href="{{ url_for('logout') }}" class="btn btn-outline-danger"
+          >Logout</a
+        >
+      </div>
+
+      {% with messages = get_flashed_messages() %} {% for message in messages %}
+      <div class="alert alert-info">{{ message }}</div>
+      {% endfor %} {% endwith %}
+
+      <div class="d-flex gap-2 flex-wrap mb-4">
+        <a href="{{ url_for('ajukan_peminjaman') }}" class="btn btn-primary"
+          >Pinjam Barang</a
+        >
+        <a href="{{ url_for('riwayat_peminjaman') }}" class="btn btn-success"
+          >Riwayat Peminjaman</a
+        >
+      </div>
+
+      <h4 class="mb-3">Daftar Barang Laboratorium</h4>
+      <div class="row g-3 mb-5">
+        {% for item in barang %}
+        <div class="col-sm-6 col-lg-3">
+          <div class="card h-100">
+            {% if item['gambar'] %}
+            <img
+              src="{{ url_for('static', filename='images/' + item['gambar']) }}"
+              class="card-img-top"
+              alt="{{ item['nama_barang'] }}"
+              style="height: 180px; object-fit: contain; padding: 12px"
+            />
+            {% endif %}
+            <div class="card-body">
+              <h5>{{ item['nama_barang'] }}</h5>
+              <p class="text-secondary mb-2">
+                {{ item['kategori'] or 'Tanpa kategori' }}
+              </p>
+              <p>Stok tersedia: <strong>{{ item['stok'] }}</strong></p>
+              {% if item['stok'] > 0 %}
+              <a
+                href="{{ url_for('ajukan_peminjaman') }}"
+                class="btn btn-outline-primary btn-sm"
+                >Ajukan Pinjaman</a
+              >
+              {% else %}
+              <span class="badge text-bg-secondary">Stok Habis</span>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        {% else %}
+        <p>Belum ada barang yang tersedia.</p>
+        {% endfor %}
+      </div>
+
+      <h4 class="mb-3">Peminjaman Saya</h4>
+      <div class="table-responsive">
+        <table class="table table-bordered bg-white">
+          <thead>
+            <tr>
+              <th>Barang</th>
+              <th>Jumlah</th>
+              <th>Tenggat</th>
+              <th>Status</th>
+              <th>Peringatan</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for p in riwayat %}
+            <tr>
+              <td>{{ p['nama_barang'] }}</td>
+              <td>{{ p['jumlah'] }}</td>
+              <td>{{ p['tenggat_kembali'] }}</td>
+              <td>{{ p['status'] }}</td>
+              <td>
+                {% if p['status'] == 'Disetujui' and p['tenggat_kembali'] <
+                hari_ini %}
+                <span class="badge text-bg-danger">Terlambat</span>
+                {% elif p['status'] == 'Disetujui' and p['tenggat_kembali'] ==
+                hari_ini %}
+                <span class="badge text-bg-warning"
+                  >Harus dikembalikan hari ini</span
+                >
+                {% elif p['status'] == 'Disetujui' and p['tenggat_kembali'] <=
+                (hari_ini) %}
+                <span class="badge text-bg-warning">Segera kembalikan</span>
+                {% elif p['status'] == 'Menunggu' %}
+                <span class="badge text-bg-secondary">Menunggu admin</span>
+                {% else %} - {% endif %}
+              </td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="5" class="text-center">Belum ada peminjaman.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

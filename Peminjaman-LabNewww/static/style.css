@@ -1,0 +1,178 @@
+:root {
+  --marun: #4a0710;
+  --marun-utama: #700018;
+  --marun-hover: #32050b;
+  --marun-muda: #f8f1f2;
+  --teks: #35262a;
+  --putih: #ffffff;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--marun-muda);
+  color: var(--teks);
+  margin: 0;
+}
+
+/* Judul halaman */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--marun);
+  font-weight: 700;
+}
+
+/* Kartu dan panel */
+.card {
+  background-color: var(--putih);
+  border: 1px solid #e9dadd;
+  border-radius: 12px;
+  box-shadow: 0 3px 12px rgba(74, 7, 16, 0.1);
+}
+
+.card-header {
+  background-color: var(--marun);
+  color: var(--putih);
+  border-bottom: none;
+}
+
+/* Tombol */
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s ease;
+}
+
+.btn-primary,
+.btn-success,
+.btn-info {
+  background-color: var(--marun-utama);
+  border-color: var(--marun-utama);
+  color: var(--putih);
+}
+
+.btn-primary:hover,
+.btn-success:hover,
+.btn-info:hover {
+  background-color: var(--marun-hover);
+  border-color: var(--marun-hover);
+  color: var(--putih);
+}
+
+/* Tombol outline */
+.btn-outline-primary,
+.btn-outline-success {
+  color: var(--marun-utama);
+  border-color: var(--marun-utama);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-success:hover {
+  background-color: var(--marun-utama);
+  border-color: var(--marun-utama);
+  color: var(--putih);
+}
+
+/* Tombol dengan fungsi khusus */
+.btn-danger {
+  background-color: #b02a37;
+  border-color: #b02a37;
+  color: var(--putih);
+}
+
+.btn-warning {
+  color: #35262a;
+}
+
+/* Tabel */
+.table {
+  background-color: var(--putih);
+  vertical-align: middle;
+}
+
+.table thead th {
+  background-color: var(--marun);
+  color: var(--putih);
+  border-color: #6a2831;
+}
+
+.table td {
+  color: var(--teks);
+}
+
+/* Tautan */
+a {
+  color: var(--marun-utama);
+}
+
+a:hover {
+  color: var(--marun-hover);
+}
+
+/* Formulir */
+.form-control,
+.form-select {
+  border-radius: 8px;
+  border-color: #dcc7cb;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--marun);
+  box-shadow: 0 0 0 0.2rem rgba(74, 7, 16, 0.15);
+}
+
+/* Label formulir */
+.form-label {
+  color: var(--marun);
+  font-weight: 600;
+}
+
+/* Navbar dan header */
+.navbar {
+  background-color: var(--marun) !important;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+  color: var(--putih) !important;
+}
+
+.navbar .nav-link:hover {
+  color: #f0dde0 !important;
+}
+
+/* Pesan notifikasi */
+.alert {
+  border-radius: 8px;
+}
+
+/* Logo dan gambar */
+.logo-kampus {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+img {
+  max-width: 100%;
+}
+
+/* Tampilan HP */
+@media (max-width: 576px) {
+  .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .table {
+    font-size: 0.9rem;
+  }
+}
